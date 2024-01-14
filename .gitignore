@@ -16,3 +16,9 @@ venv
 *.heic
 *.mov
 *.pdf
+
+#latex
+.aux
+.log
+.toc
+.synctex.gz
