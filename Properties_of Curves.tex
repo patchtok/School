@@ -1,0 +1,224 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, top=1.25cm,bottom=1.5cm,right=1.5cm,left=1.5cm}
+\usepackage{amsmath, amssymb, amstext}
+\usepackage{tikz}
+\setlength\parindent{0pt}
+\tikzset{myBound/.style={color=blue}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+\tikzset{myLine/.style={thick,color=black}}
+\usepackage{enumitem}
+\usepackage{array}
+\newcolumntype{M}{> {$} l < {$}}
+\usepackage{mathtools}
+\newcommand\Mycomb[2]{\prescript{#1\mkern-1mu}{}C_{#2 \mkern+6mu}}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{tkz-euclide}
+\usetikzlibrary{positioning}
+
+\definecolor{minGridCol}{RGB}{130, 255, 255}
+\tikzset{myMajGrid/.style={color=gridCol, line width=0.0mm}}
+\tikzset{myMinGrid/.style={color=minGridCol, line width=0mm}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+
+\usepackage{tkz-euclide}
+
+\tikzset{myAngle/.style={thin,color=black}}
+\newcommand\onelabel[6]{
+	\tkzMarkAngle[myAngle,size =#1]({#2},{#3},{#4})
+	\tkzLabelAngle[pos=#5 ]({#2},{#3},{#4}){\footnotesize ${#6}$}
+}
+
+\title{Properties of Curves}
+\author{Kh notes}
+\date{}
+
+
+
+%----------------------Triangles------------------------------------------
+\newcommand{\x}{0}
+\newcommand{\y}{0}
+\newcommand\triangleSAS[7]{
+	\renewcommand{\x}{0};
+	\renewcommand{\y}{0};
+	\coordinate (R) at (#5,#6);
+	%\filldraw[red](\x,\y) circle [radius=1pt];
+	%\filldraw[](0,0) circle[radius=1pt];
+	\begin{scope}[ xshift=#5cm, yshift=#6cm,rotate around={#4:(R)}, scale around={#7:(R)} ]
+		%\filldraw[blue](\x,\y) circle [radius=1pt];
+		\coordinate(O) at(0,0);
+		\coordinate(B) at (#3,0);
+		\coordinate(A) at ({#1*cos(#2)},{#1*sin(#2)});		
+	\end{scope}
+	
+}
+
+
+%----------------------Bounding Boxes------------------------------------------
+\newcommand\brect[2]{
+	\draw[myBound](-#1,-#2)rectangle(#1,#2);
+	%backcolour
+	\draw[myBound, opacity=0.1, xstep=0.5cm, ystep=0.5cm](-#1,-#2)grid(#1,#2);
+	\draw[myBound](0,0)circle[radius=2pt];
+}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+\section{Review Questions}
+\subsection{Some fundamental derivatives:}
+\def\arraystretch{2}
+\setlength\tabcolsep{1cm}
+\newcommand{\sep}{0.25cm}
+\begin{center}
+	\begin{tabular}{| M | M |} \hline
+		\text{Function} & \text{Derivative} \\\hline
+		f(x)=x^n  & \displaystyle f'(x)=nx^{n-1}~~ (n \in \mathbb{R})\\ [\sep] \hline
+		f(x)=e^x  & \displaystyle f'(x) =e^x\\ [\sep] \hline
+		f(x)=\ln x  & \displaystyle f'(x) =\frac{1}{x}\\ [\sep] \hline
+		f(x)=\sqrt{x}  & \displaystyle f'(x) =\frac{1}{2 \sqrt{x} }\\ [\sep] \hline
+		f(x)=\sin{x}  & \displaystyle f'(x) =\cos{x}\\ [\sep] \hline
+		f(x)=\cos{x}  & \displaystyle f'(x) =-\sin{x}\\ [\sep] \hline
+		f(x)=\tan{x}  & \displaystyle f'(x) =\sec^2{x}\\ [\sep] \hline
+	\end{tabular}
+\end{center}
+\subsection{Rules of differentiation:}
+Chain Rule:
+\begin{align*}
+	y&= g(u_{(x)})\\
+	\frac{dy}{dx} &= g'(u_{(x)} )u'_{(x)}
+\end{align*}
+Product Rule:
+\begin{align*}
+	y&= u_{(x)}v_{(x)}\\
+	\frac{dy}{dx} &= u_{(x)}v'_{(x)} +u'_{(x)}v_{(x)}
+\end{align*}
+Quotient Rule:
+\begin{align*}
+	y&= \frac{u_{(x)}}{v_{(x)}}\\
+	\frac{dy}{dx} &= \frac{ u'_{(x)}v_{(x)} - u_{(x)}v'_{(x)} }{ [ v_{(x)} ]^2 }
+\end{align*}
+
+
+
+\section{Start Q and A}
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-14,0)--(14,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,7)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+%	\foreach \n [count=\i] in{-12,-10,...,-2,2,4,..., 12}{
+%		\draw[](\n,-0.1)node[below]{\footnotesize \n};
+%		\draw[](\n,-0.1)--(\n,0.1);}
+%	\foreach \n [count=\i] in{-4,-2,2,4,...,5}{
+%		\draw[](-0.1,\n )node[left]{\footnotesize \n};
+%		\draw[](-0.1,\n )--(0.1,\n);}
+	\draw[yscale=1,xscale=1,domain=-11:12,smooth,variable=\x,blue, thick] plot ({\x},{  0.01*(\x+9)*(\x-9)*(\x-1)    });
+	\draw[](9,3)node[left]{$y=f(x)$};
+	%	\draw[yscale=1,xscale=1,domain=5:13,smooth,variable=\x,blue, thick] plot ({\x},{  (\x-9)^2    });
+	%\draw[yscale=1,xscale=1,domain=-3:5,smooth,variable=\x,blue, thick] plot ({\x},{  (\x-1)^2    });
+\end{tikzpicture}
+\section{Tangents}
+The tangent to a curve at a point A is the best approximating straight line to the curve at point A.\\
+
+(Leibniz definition) Tangent to the curve $y=f(x)$ at the point $(a,f(a))$ is the line through the infinitely close pair of points either side of $f(a)$\\
+
+$$\frac{y-f(a)}{x-a} =\lim\limits_{h\to 0}\frac{f(a+h)-f(a)}{h}$$\\
+
+
+It is a single point of contact with the curve (although it may intersect the curve at some other point)\\
+
+
+For the function $y=f(x)$, and some $x=a$\\
+$(a,f(a))$ is on the curve \\
+$f'(a)$ is the gradient of the curve at $x=a$\\\\
+$\displaystyle \frac{y-f(a)}{x-a}=f'(a)$\\\\
+$\Rightarrow y= f'(a)(x-a) + f(a)$ is the equation of the tangent line\vspace{2cm}
+
+\textbf{4 worked examples} 
+\newpage
+\section{Normals}
+\newcommand{\ang}{50}
+\newcommand{\ext}{5}
+The product of the gradients of perpedicular lines = -1
+\begin{center}
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-5,0)--(5,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,5)node[above]{$y$};
+	%\draw[black](0,0) circle [radius=5pt];
+	\draw[yscale=1,xscale=1,domain=-\ext:\ext,smooth,variable=\t,blue, thick] plot (  {\t*cos(\ang)},{ \t*sin(\ang)    });
+	\draw[yscale=1,xscale=1,domain=-\ext:\ext,smooth,variable=\t,red, thick] plot (  {\t*cos(\ang + 90)},{ \t*sin(\ang + 90)    });
+	\coordinate (O) at (0,0);
+	\coordinate (A) at (  {\ext*cos(\ang)} ,{ \ext*sin(\ang)    });
+	\coordinate (X) at ( {\ext*cos(\ang)} ,0);
+	\coordinate (A') at (  {\ext*cos(\ang + 90)},{ \ext*sin(\ang +90)    });
+	\coordinate (X') at ({\ext*cos(\ang + 90)},0);
+	\onelabel{0.6}{X}{O}{A}{0.85}{\theta}
+	
+	\draw[dashed, blue](A) -- (X)node[midway, right]{\scriptsize $\sin(\theta)$};
+	\draw[dashed, blue](O) -- (X)node[midway, above, xshift=0.3cm]{\scriptsize $\cos(\theta)$};
+		\tkzMarkRightAngle[myLine,size=.4](A',O,A)
+			\draw[dashed, red](A') -- (X')node[midway, left]{\scriptsize $\sin( \theta +\frac{ \pi }{2} )$};
+		\draw[dashed, red](O) -- (X')node[midway, above, xshift=-0.1cm]{\scriptsize $\cos(\theta + \frac{ \pi }{2} )$};
+		
+		\draw[blue](8,4)node[right]{\Large $m=\frac{\sin(\theta)}{\cos(\theta)}$};
+		\draw[red](8,2)node[right]{\Large $m_{\perp}=\frac{\sin(\theta +\frac{ \pi }{2} )}{\cos(\theta +\frac{ \pi }{2})}= - \frac{\cos(\theta)}{\sin(\theta)}$};
+			\draw[black](8,0)node[right]{\Large $m \times m_{\perp} = -1$};
+\end{tikzpicture}\vspace{1cm}
+
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-14,0)--(14,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,7)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+	\draw[yscale=1,xscale=1,domain=-11:12,smooth,variable=\x,blue, thick] plot ({\x},{  0.01*(\x+9)*(\x-9)*(\x-1)    });
+	\draw[yscale=1,xscale=1,domain=-11:12,smooth,variable=\x,green, thick, dashed] plot ({\x},{  0.01*(3*(\x)^2 -2*\x -81)    });
+	\draw[yscale=1,xscale=1,domain=3:11,smooth,variable=\x,red, thick] plot ({\x},{  0.52*\x -5.56   });
+	\draw[yscale=1,xscale=1,domain=4:10,smooth,variable=\x,orange, thick] plot ({\x},{ (-1/0.52)*\x + 11.542  });
+	\draw[](9,3)node[left]{$y=f(x)$};
+	
+		\draw[black](7,-1.92) circle [radius=5pt];
+
+\end{tikzpicture}
+
+
+\end{center}
+\section{Increasing and Decreasing}
+\section{Stationary Points}
+\subsection{Turning points (minima, maxima)}
+\subsection{Stationary points of inflection}
+\section{Shape}
+\section{Inflection Points}
+\section{Understanding functions and their derivatives}
+
+
+
+
+
+
+
+\newpage
+% I prefer the alignment at the equal sign.
+\begin{alignat*}{2}
+	&\text{The equation is:}\qquad & 9a-4 &= 14+3a\\
+	&\text{Subtract $3a$:} & 6a-4 &= 14\\
+	&\text{Subtract 4:} & 6a &= 18\\
+	&\text{Divide by 6:} & a &= 3
+\end{alignat*}
+
+$$A\widehat{B}C$$
+$$A\widehat{BC}C$$
+$$A\hat{B}C$$
+$$N \tilde{a}$$
+$$X \sim \mathcal{N}(\mu,\,\sigma^{2})$$
+
+
+
+
+
+
+
+
+\end{document}

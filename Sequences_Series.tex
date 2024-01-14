@@ -1,0 +1,102 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, top=1.25cm,bottom=1.5cm,right=1.5cm,left=1.5cm}
+\usepackage{amsmath, amssymb, amstext}
+\usepackage{tikz}
+\setlength\parindent{0pt}
+\tikzset{myBound/.style={color=blue}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+\tikzset{myLine/.style={thick,color=black}}
+\usepackage{enumitem}
+\usepackage{array}
+\newcolumntype{M}{> {$} l < {$}}
+\usepackage{mathtools}
+\newcommand\Mycomb[2]{\prescript{#1\mkern-1mu}{}C_{#2 \mkern+6mu}}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{tkz-euclide}
+\usetikzlibrary{positioning}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+\definecolor{minGridCol}{RGB}{130, 255, 255}
+\tikzset{myMajGrid/.style={color=gridCol, line width=0.0mm}}
+\tikzset{myMinGrid/.style={color=minGridCol, line width=0mm}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+
+\usepackage{tkz-euclide}
+
+\tikzset{myAngle/.style={thin,color=black}}
+\newcommand\onelabel[6]{
+	\tkzMarkAngle[myAngle,size =#1]({#2},{#3},{#4})
+	\tkzLabelAngle[pos=#5 ]({#2},{#3},{#4}){\footnotesize ${#6}$}
+}
+
+\title{Sequences and Series}
+\author{Kh notes}
+\date{}
+
+
+
+%----------------------Triangles------------------------------------------
+\newcommand{\x}{0}
+\newcommand{\y}{0}
+\newcommand\triangleSAS[7]{
+	\renewcommand{\x}{0};
+	\renewcommand{\y}{0};
+	\coordinate (R) at (#5,#6);
+	%\filldraw[red](\x,\y) circle [radius=1pt];
+	%\filldraw[](0,0) circle[radius=1pt];
+	\begin{scope}[ xshift=#5cm, yshift=#6cm,rotate around={#4:(R)}, scale around={#7:(R)} ]
+		%\filldraw[blue](\x,\y) circle [radius=1pt];
+		\coordinate(O) at(0,0);
+		\coordinate(B) at (#3,0);
+		\coordinate(A) at ({#1*cos(#2)},{#1*sin(#2)});		
+	\end{scope}
+	
+}
+
+
+%----------------------Bounding Boxes------------------------------------------
+\newcommand\brect[2]{
+	\draw[myBound](-#1,-#2)rectangle(#1,#2);
+	%backcolour
+	\draw[myBound, opacity=0.1, xstep=0.5cm, ystep=0.5cm](-#1,-#2)grid(#1,#2);
+	\draw[myBound](0,0)circle[radius=2pt];
+}
+\begin{document}
+	\maketitle
+\tableofcontents
+\newpage
+\section{Introduction (Number Sequences)}
+\section{Arithmetic Sequences}
+\subsection{Ex 5B.1}
+\subsection{Ex 5B.2}
+\section{Geometric  Sequences}
+\subsection{Ex 5C}
+\section{Growth and Decay}
+\subsection{Ex 5D}
+\section{Financial Mathematics}
+\subsection{Compund Interest}
+\subsubsection{Ex 5E.1}
+\subsection{Inflation}
+\subsubsection{Ex 5E.2}
+\subsection{Real Value of an Investment}
+\subsubsection{Ex 5E.3}
+\subsection{Depreciation}
+\subsubsection{Ex 5E.4}
+\subsection{Using Financial Models}
+\subsubsection{Ex 5E.5}
+\section{Series}
+\subsection{Sigma Notation}
+\subsubsection{Ex 5F}
+\subsection{Arithmetic Series}
+\subsubsection{Ex 5G}
+
+\end{document}
