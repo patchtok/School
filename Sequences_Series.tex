@@ -181,15 +181,109 @@ General term formula:
 \begin{itemize}
 	\item Approximations using arithmetic sequences
 \end{itemize}
+\newpage
 \section{Geometric  Sequences}
-\subsection{Ex 5C}
+An example of a geometric sequence is:
+\LARGE $$3,6,12, 24, 48,...$$ \normalsize
+In this case the difference between each term is not constant, but we can observe that each term is $2 \times$ the previous term.
+So we have 
+\begin{alignat*}{2}
+&\qquad &u_{n+1} &= 2u_n\\
+	&\Rightarrow& \frac{ u_{n+1} }{ u_n }&= 2
+\end{alignat*}
+and 
+\begin{alignat*}{2}
+	&\qquad &u_{1} &= 3\\
+	&& u_2&= 2\times 3\\
+	&& u_3&= 2\times 2\times 3\\
+	&& u_4&=  2\times2\times 2\times 3\\
+	&\Rightarrow&u_n&= 3\times(2)^{n-1}
+\end{alignat*}
+\hrule\vspace{0.5cm}
+A geometric sequence has a \textbf{common ratio} between the terms.
+In general:
+$$\frac{ u_{n+1} }{ u_n } = r$$
+The first term is (generally) $u_1$
+\LARGE$$u_n = u_1 r^{n-1}$$\normalsize
+\vspace{0.5cm}\hrule
+
+\begin{center}
+	\begin{tikzpicture}[xscale=0.8, yscale=0.2, scale=0.9]
+		
+		\draw[myMajGrid](0,0) grid(8.5,48.5);
+		\draw[myAxisLine, ->](0,0)--(9,0)node[right]{$n$};
+		\draw[myAxisLine, ->](0,0)--(0,49)node[above]{$u_n$};
+		\foreach \n [count=\i] in{1,2,...,8 }{
+			\draw[](\n,-0.1)node[below]{\tiny \n};
+			\draw[myTick](\n,0.2)--(\n,-0.2);
+			
+		}
+		\foreach \n [count=\i] in{4,8,...,48 }{
+			
+			\draw[](-0.1,\n)node[left]{\tiny \n};
+			\draw[myTick](0.2,\n)--(-0.2,\n);
+		}
+		\foreach \n in{1,2,...,5}{
+			\filldraw[yscale=4, red](\n,{(3*(2)^(\n-1) )/4} ) circle[radius=6pt];
+		}
+		\foreach \n in{1,2,...,8}{
+			\filldraw[yscale=4, blue](\n,{(3*(1.2)^(\n-1) )/4} ) circle[radius=5pt];
+		}
+		\foreach \n in{1,2,...,8}{
+			\filldraw[yscale=4, orange](\n,{(3*(0.7)^(\n-1) )/4} ) circle[radius=3pt];
+		}
+		
+		\draw[orange](10,1)node[right]{$u_n = 3(0.7)^{n-1}$};
+		\draw[blue](10,12)node[right]{$u_n = 3(1.2)^{n-1}$};
+		\draw[red](10,48)node[right]{$u_n = 3(2)^{n-1}$};
+		\newcommand{\shft}{30}
+		\draw[](-8.5,6+\shft)node[right]{\large Behaviour of some};
+		\draw[](-8.5,3+\shft)node[right]{\large  sequences with different};
+		\draw[](-8.5,0+\shft)node[right]{\large  values of $r$};
+		
+
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Ex 5C}\vspace{0cm}
+\begin{itemize}
+	\item Finding common ratio
+	\item Showing a sequence is geometric
+	\item Finding the general formula and terms.
+	\item k problems
+	\item Finding the general formula, given two terms
+\end{itemize}
+\includepdf[pages={1-},scale=0.85]{GeometricQuestions.pdf} 
 \section{Growth and Decay}
-Starter Questions:
+\textbf{Starter Questions:}
 \begin{enumerate}
 	\item A school had 1200 students and a year later this has increased by 8\% . How many students are now in the school?
 	\item Mary buys a car for \$40,000 and in one year its price has decreased by 12\%. What is the value of it now?
 	\item The population of Sydney is currently 5.2 million. If it increases at a rate of 1.25\% annually, what will the population be after 3 years?
 \end{enumerate}
+
+\textbf{Problem:}\\\\
+3 fruit flies arrive at fruit bowl that has been left out on the kitchen bench. The number of fruit flies increases by 50\% every 20 minutes.\\
+How many fruit flies will there be after 2 hours?
+\begin{center}
+	\begin{tikzpicture}[xscale=2.5]
+			\draw[myAxisLine, ->](0,0)--(7,0)node[right]{$time$};
+			\foreach \n in{0,1,2,...,6}{
+				\draw[myTick](\n,0.25)--(\n,0)node[below]{\tiny \fpeval{20*\n}};
+			}
+			
+			\draw[myTick](0,0.25)node[above]{ \small $u_0 = 3$};
+			\draw[myTick](1,0.25)node[above]{\small $u_1 = 3(1.5)$};
+			\draw[myTick](2,0.25)node[above]{\small $u_2 = 3(1.5)(1.5)$};
+			\draw[myTick](6,0.25)node[above]{\small $u_6 = 3(1.5)^6$};
+	\end{tikzpicture}
+\end{center}
+Because we want to have a starting value at `time 0' we start our sequence at $u_0$ and have the general term:
+$$u_n = 3(1.5)^n$$
+\hrule\vspace{0.5cm}
+And more generally, in \textbf{growth and decay} problems we use
+\LARGE $$u_n = u_0 r^n$$ \normalsize
+\vspace{0.5cm}\hrule
 \subsection{Ex 5D}
 \section{Financial Mathematics}
 \subsection{Compound Interest}
