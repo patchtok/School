@@ -40,6 +40,7 @@
 {\LARGE\bfseries}
 {\chaptertitlename:~\thechapter \vspace{0cm}} {1em} {}
 \titlespacing*{\chapter}{0pt}{0pt}{10pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
 \title{Properties of curves and applications of differentiation }
 \author{Kh notes}
 \date{}
@@ -299,22 +300,16 @@ When analysing functions, we are often interested in the intervals across which 
 If a function changes from increasing to decreasing, it must pass through a stationary point (or cross a region where the function is not differentiable)\\\\
 Hnece we need to divide up the domain into intervals bounded by stationary points  and points where the function is not differentiable.\\
 Finding a single gradient on each interval will tell us whether the function is increasing or decreasing.\\\\
-We can communicate all of this using a \textbf{sign diagram}.
-
-
-
-
-\subsection{Basic Sign Diagram example}
+We can communicate all of this using a \textbf{sign diagram}.\\\\
+\subsection{Basic sign diagram example}
 
 \begin{center}
-	
-	
 	\begin{tikzpicture}[xscale= 1,yscale=1]
         %\draw[myMinGrid, xstep=1cm, ystep=1cm](-6,-5) grid(6,5);
 		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
 		\draw[myAxisLine, <->](0,-3)--(0,4)node[above]{$y$};
 		\draw[black](0,0) circle [radius=5pt];
-		\draw[domain=-4:5,smooth,variable=\x,blue, thick, <->] plot ({\x},{ 0.1*\x^3  -0.15*((\x)^2)  -1.8*(\x) +1  });
+		\draw[domain=-4:5,smooth,variable=\x,blue, thick, <->] plot ({\x},{ 0.1*\x^3  -0.15*((\x)^ 2)  -1.8*(\x) +1  });
 			\renewcommand{\y}{-7}
 			\renewcommand{\x}{-2}
 			\newcommand{\shft}{3}
@@ -337,19 +332,22 @@ We can communicate all of this using a \textbf{sign diagram}.
 		
 	\end{tikzpicture}\vspace{1cm}
 \end{center}
+\newpage
+\begin{figure}[!h]
+\includepdf[scale=0.85]{SignDiagram_Example.pdf} 
+\end{figure}
 
 \newpage
-\subsection{Sign Diagram example with discontinuites}
+\subsection{Sign diagram example with discontinuites}
 Below is the graph of $$y=\frac{x-3}{x^2-4}$$
 Because division by 0 is undefined, the graph has vertical asymptotes when $x^2-4 =0$\\
 (i.e when $x=2$ and $x=-2$ )\\\\
 The derivative is $\displaystyle \frac{dy}{dx} = \frac{-x^2+6x-4}{(x^2-4)^2} $ and using a graphics calulator to solve $-x^2+6x-4=0$, \\\\
-we have stationary points at $x\approx 0.764$ and $x\approx 5.236$\\\\
-
-
-\begin{tikzpicture}[]
-	 \clip(-8,-10) rectangle (8,6);
-	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+we have stationary points at $x\approx 0.764$ and $x\approx 5.236$
+\begin{center}
+\begin{tikzpicture}[scale=1]
+	 \clip(-8,-9) rectangle (8,6);
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-8,-9) grid(8,6);
 	\draw[myAxisLine, <->](-7.5,0)--(7.5,0)node[right]{$x$};
 	\draw[myAxisLine, <->](0,-3)--(0,5)node[above]{$y$};
 	\draw[black](0,0) circle [radius=5pt];
@@ -392,15 +390,198 @@ we have stationary points at $x\approx 0.764$ and $x\approx 5.236$\\\\
 		
 		\draw[](-7,-6.5)node[right]{\textbf{Sign diagram:} $f'(x)$ either calculated or observed from a graph };
 		\draw[blue](10,5)node[right]{$y=f(x)$};
-
-		
-
-
-	
-\end{tikzpicture}\vspace{1cm}
+\end{tikzpicture}
+\end{center}
+\subsection{Ex 13 C}
+\newpage
+	\includepdf[scale=0.85, pages={1-}]{IncreasingDecreasingQuestions.pdf} 
+\newpage
 \section{Stationary Points}
 \subsection{Turning points (minima, maxima)}
+Frrom our `standard' graph  we can identify a couple of key features.
+$$f(x) = x^3-1.5x^2-18x+1$$
+
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+		\draw[domain=-4.7:5.85,smooth,variable=\x,blue, thick, <->] plot ({\x}, {\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 } );
+		\renewcommand{\y}{-7}
+		\renewcommand{\x}{-2}
+		\newcommand{\shft}{3}
+		\coordinate (A) at  (\x,0);
+		\coordinate (A') at  (\x,{\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 });
+		%\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+		\renewcommand{\x}{3}
+		\coordinate (B) at  (\x,0);
+		\coordinate (B') at  (\x,{\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 });
+		\draw[red, dashed](A) -- (A');
+		\draw[red, dashed](B) -- (B');
+		
+		\coordinate (S1) at (-2,23);
+		\coordinate (S2) at (3,-39.5);
+		\coordinate (O) at (0,0);
+		\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+		\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+		
+		\coordinate (S1') at (-5,50);
+			\coordinate (S2') at (5,-50);
+		\draw[thick, red, ->](S1') node[anchor = south]{Local maximum}-- (  $ (S1')!0.7!(S1) $  );
+		\draw[thick, red, ->](S2') node[anchor = north]{Local minimum}-- (  $ (S2')!0.7!(S2) $  );
+		
+		\draw[blue](-8,-55)node[right]{Global minimum as $x \to -\infty$};
+		\draw[blue](8,55)node[left]{Global maximum as $x \to \infty$};
+
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+If we do not have the graph we can classify the stationary points using a sign diagram.
+\begin{center}
+	\begin{tikzpicture}
+			\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,3);
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{-2}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+			\draw[thick,red, yscale=1.5, <->] ([shift=(0:1.5cm)]\x,\y+0.75) arc (20:160:1.5cm);
+			\renewcommand{\x}{3}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$3$};
+			\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $+$ }node[above, pos=0.5]{\Huge $-$}node[above, pos=0.85]{\Huge $+$ }node[right]{$f'(x)$};
+			\draw[thick,red, yscale=1.5, <->] ([shift=(0:1.5cm)]\x,\y+1.75) arc (-20:-160:1.5cm);
+	\end{tikzpicture}
+\end{center}
+\newpage
+
 \subsection{Stationary points of inflection}
+Stationary points are not necessarily local maxima or minima. \\
+They may be \textbf{inflection} points. \\
+This is where the shape of the curve is changing, but the gradient is not changing sign.
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-3.5) grid(8,3.5);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-2:3.7,smooth,variable=\x,blue, thick, <->] plot ({\x}, {2*(\x^3)*(\x-3)  - 15 } ) node[anchor = south]{$f(x)=2x^4 - 6x^3 -15$};
+
+
+			
+			\coordinate (S1) at (0,-15);
+			\coordinate (S2) at (2.25,-32.086);
+			\coordinate (O) at (0,0);
+			\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+			\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+			
+			\coordinate (S1') at (-5,-50);
+			\coordinate (S2') at (5,-50);
+			\draw[thick, red, ->](S1') node[anchor = north]{Inflection point}-- (  $ (S1')!0.7!(S1) $  );
+			\draw[thick, red, ->](S2') node[anchor = north]{Local minimum}-- (  $ (S2')!0.7!(S2) $  );
+		\end{scope}
+		
+	\end{tikzpicture}
+\end{center}
+\textbf{Constructing a sign diagram:}
+\tiny
+\begin{alignat*}{2}
+	&&f(x)&=2x^4 - 6x^3 -15 \\
+	&& f'(x)&=  8x^3-18x^2\\
+	&& &=  2x^2(4x-9)\\
+	&\text{Set}\qquad& f'(x)&=0\\
+	&\Rightarrow&2x^2(4x-9)&=0\\
+	&&x&=0 \text{ and } x=\frac{9}{4}
+\end{alignat*}
+\normalsize
+\begin{center}
+	\begin{tikzpicture}
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,2.5);
+		\renewcommand{\y}{0}
+		\renewcommand{\x}{0}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+		%\draw[ultra thick,blue, yscale=1.5, ->] ([shift=(0:1.5cm)]\x,\y+0.75) arc (0:360:1.5cm);
+		
+		\draw[thick,red, yscale=1.5, ->] ([shift=(210:1cm)]\x,\y+2) arc (210:270:1cm);
+		
+			\draw[thick,red, yscale=1.5, ->] ([shift=(90:1cm)]\x,\y) arc (90:30:1cm);
+		\renewcommand{\x}{2.25}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$\frac{9}{4}$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $-$ }node[above, pos=0.57]{\Huge $-$}node[above, pos=0.85]{\Huge $+$ }node[right]{$f'(x)$};
+		\draw[thick,red, yscale=1.5, <->] ([shift=(-30:1.5cm)]\x,\y+2) arc (-30:-150:1.5cm);
+	\end{tikzpicture}
+\end{center}
+If the sign of the gradient repeats across a staionary point, we will have an inflection point.\\
+Note: Inflection points can be at stationary points, or not. Consequently we classify the one above as a \textbf{stationary inflection point}\\
+Please note: Summary chart in the textbook.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.2]{s_point_properties.pdf} 
+\end{figure}
+\newpage
+\subsection{Greatest or least values (testing boundaries)}
+If we are given a function which is bounded on an interval, and are finding the greatest/least values on that interval:
+we need to 
+\begin{itemize}
+	\item find the values of the stationary points
+	\item find the values at the end points of the function (as these could be geater/less than the staionary point values).
+	\end{itemize}
+	Following the example from the book using
+	$$y=x^3-6x^2 +5  \text{~~On the interval } -2 \leqslant x \leqslant 5$$
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-3,0)--(8,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-2.5:6.5,smooth,variable=\x,blue, thick, dashed, <->] plot ({\x}, {\x^3  -6*((\x)^ 2) +5} );
+			\draw[domain=-2:5,smooth,variable=\x,blue, thick, *-*] plot ({\x}, {\x^3  -6*((\x)^ 2) +5} );
+			\renewcommand{\y}{50}
+			\renewcommand{\x}{-2}
+			\newcommand{\shft}{3}
+			\coordinate (A) at  (\x,\y);
+			\coordinate (A') at  (\x, -\y ) ;
+			%\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+			\renewcommand{\x}{5}
+			\coordinate (B) at  (\x,\y);
+			\coordinate (B') at  (\x,  -\y );
+			\draw[teal, ultra thin](A) -- (A');
+			\draw[teal, ultra thin](B) -- (B');
+			
+			\coordinate (S1) at (0,5);
+			\coordinate (S2) at (4,-27);
+			\coordinate (O) at (0,0);
+			\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+			\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+			
+			\coordinate (S1') at (2,40);
+			\coordinate (S2') at (2,-40);
+			\draw[thick, red, ->](S1') node[anchor = south]{Local maximum: $(0,5)$}-- (  $ (S1')!0.7!(S1) $  );
+			\draw[thick, red, ->](S2') node[anchor = north]{Local minimum: $(4,-27)$}-- (  $ (S2')!0.7!(S2) $  );
+			
+			\draw[blue](-2,-27)node[left]{Boundary:  $(-2,-27)$};
+			\draw[blue](5,-20)node[right]{Boundary:  $(5,-20)$};
+			
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=16cm]{greatestleast-boundaries.pdf} 
+\end{figure}
+
+
+\newpage
+\subsection{Ex 13D}
+
+
+\newpage
+\includepdf[scale=0.85, pages={1-}]{StationaryPointsQuestions.pdf} 
+\newpage
 \section{Shape}
 \section{Inflection Points}
 \section{Understanding functions and their derivatives}
