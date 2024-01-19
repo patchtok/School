@@ -23,6 +23,7 @@
 \tikzset{myMajGrid/.style={color=gridCol, line width=0.0mm}}
 \tikzset{myMinGrid/.style={color=minGridCol, line width=0mm}}
 \tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+\tikzset{myFaintAxisLine/.style={line width=0.3mm,color=black, opacity=0.3}}
 \tikzset{myGraphPerm/.style={color=black,thick}}
 \tikzset{myGraphPermGray/.style={color=black,ultra thin}}
 
@@ -218,7 +219,12 @@ In general, we will need to find where the stationary points are:\\
 	\item Concept questions 
 \end{itemize}
 
-\textbf{4 worked examples} 
+\textbf{3 worked examples} 
+\begin{itemize}
+	\item Polynomial
+	\item Log or exponential
+	\item Conceptual
+\end{itemize}
 \newpage
 \includepdf[pages={1-},scale=0.85]{TangentQuestions.pdf} 
 \newpage
@@ -583,7 +589,103 @@ we need to
 \includepdf[scale=0.85, pages={1-}]{StationaryPointsQuestions.pdf} 
 \newpage
 \section{Shape}
+Looking at the shape of of the graph below, we can see that over a certain interval, the curve is turning downwards \textbf{it is concave down}, and on then it changes to be turning upwards \textbf{concave up}.
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-4.7:5.85,smooth,variable=\x,blue, thick, <->] plot ({\x}, {\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 } )node[left]{$f(x)=x^3-1.5x^2-18x+1$};
+				\draw[thick,red, yscale=20, dashed, <->] ([shift=(20:1.5cm)]-2,-1) arc (20:160:1.5cm);
+				\draw[thick,red, yscale=20, dashed, <->] ([shift=(200:1.5cm)] 3,0) arc (200:340:1.5cm);
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+If the curve is \underline{concave down} the \textbf{gradient} is \underline{decreasing}, so we consider the \underline{second derivative}
+\begin{alignat*}{4}
+		 &                     & \text{Leibnitz}&              &\qquad \text{or}\qquad  & &\text{Newton}&\\
+	 &                     & \frac{d}{dx}(\frac{dy}{dx}) &<  0 & & & (f'(x))'&<0\\
+	 &\Rightarrow\qquad& \frac{d^2y}{dx^2}                 &<0 & &\Rightarrow\qquad&f''(x)&<0\\
+\end{alignat*}
+Similarly, if the curve is \underline{concave up}  the \textbf{gradient} is \underline{increasing}, so 
+\begin{alignat*}{4}
+	&\qquad& \frac{d^2y}{dx^2}                 &>0 & \qquad \text{or}\qquad &\qquad&f''(x)&>0\\
+\end{alignat*}
+We can contruct a sign diagram for (in this case) $f''(x) = 6x-3$, and $f''(x) = 0$ when $x=\frac{1}{2}$
+\begin{center}
+	\begin{tikzpicture}
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,1);
+		\renewcommand{\y}{0}
+		\renewcommand{\x}{0.5}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0.5$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.3]{\Huge $-$ }node[above, pos=0.75]{\Huge $+$ }node[right]{$f''(x)$};
+	
+	\end{tikzpicture}
+\end{center}
+We can also observe that there is an \textbf{non-stationary inflection point} at $x=\frac{1}{2}$, $f(\frac{1}{2})=-\frac{37}{4}$\\\\
+
+\subsection{Ex 13E}
+\newpage
+\includepdf[scale=0.85, pages={1-}]{ShapeQuestions.pdf} 
+\newpage
 \section{Inflection Points}
+At an inflection point:
+\begin{itemize}
+	\item the tangent line crosses the curve
+	\item the shape of the curve is changing from concave up to concave down (or vice versa).
+\end{itemize}
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, xstep=1cm, ystep=1cm](-4,-7) grid(11,6);
+		\draw[myAxisLine, <->](-4,-1)--(9,-1)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,5)node[above]{$y$};
+		\draw[black](0,-1) circle [radius=5pt];
+		\begin{scope}[yscale=0.2, xscale=2]
+			\draw[domain=-1.3:4.7,smooth,variable=\x,blue, thick, <->] plot ({\x}, { 0.4*(\x^3)*(5-\x) } )node[left]{$f(x)=x^3(5-x)+1$};
+			\renewcommand{\x}{2.5}
+			\newcommand{\calc}{0};
+			\renewcommand{\calc}{ 0.4*( (\x^2)*(15-4*\x) };	
+			\draw[yscale=1,xscale=1,domain=-1:1,smooth,variable=\t,red, thick] plot ( {\x+\t} ,{ 0.4*(\x^3)*(5-\x) + \t*\calc    });
+			
+			\draw[yscale=1,xscale=1,domain=-1:1,smooth,variable=\t,red, thick] plot ( {\t} ,{ 0    });
+			
+
+
+		\end{scope}
+		
+		\begin{scope}[yshift = -4cm, xscale=2]
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{0}
+			\draw[myFaintAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+			\renewcommand{\x}{3.75}
+			\draw[myFaintAxisLine,ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$3.75$};
+			\draw[myFaintAxisLine, ultra thick, <->](-2,\y)--(5,\y)node[above, pos=0.15]{\Huge $+$ }node[above, pos=0.5]{\Huge $+$}node[above, pos=0.9]{\Huge $-$ }node[right]{$f'(x)$};
+		\end{scope}
+		\begin{scope}[yshift = -6cm, xscale=2]
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{0}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+			\renewcommand{\x}{2.5}
+			\draw[myAxisLine,ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$2.5$};
+			\draw[myAxisLine, ultra thick, <->](-2,\y)--(5,\y)node[above, pos=0.15]{\Huge $-$ }node[above, pos=0.5]{\Huge $+$}node[above, pos=0.8]{\Huge $-$ }node[right]{$f''(x)$};
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+We can identify inflection points by
+\begin{itemize}
+	\item Solving $f''(x) = 0$
+	\item Then using a sign diagram to verify that the points we have found are actually inflection points.\\
+	The sign diagram must \textbf{change signs} across the 0 for the points to be inflection points.
+\end{itemize}
+\subsection{Ex 13F}
+
+\newpage
+\includepdf[scale=0.85, pages={1-}]{InflectionPointsWorkedExample.pdf} 
+\newpage
 \section{Understanding functions and their derivatives}
 
 \chapter{Applications of differentiation}
