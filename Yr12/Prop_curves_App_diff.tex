@@ -1,0 +1,773 @@
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{pdfpages}
+\geometry{a4paper, top=1.25cm,bottom=1.5cm,right=1.5cm,left=1.5cm}
+\usepackage{amsmath, amssymb, amstext}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\setlength\parindent{0pt}
+\tikzset{myBound/.style={color=blue}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+\tikzset{myLine/.style={thick,color=black}}
+\usepackage{enumitem}
+\usepackage{array}
+\newcolumntype{M}{> {$} l < {$}}
+\usepackage{mathtools}
+\newcommand\Mycomb[2]{\prescript{#1\mkern-1mu}{}C_{#2 \mkern+6mu}}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{tkz-euclide}
+\usetikzlibrary{positioning}
+
+
+
+\definecolor{minGridCol}{RGB}{130, 255, 255}
+\tikzset{myMajGrid/.style={color=gridCol, line width=0.0mm}}
+\tikzset{myMinGrid/.style={color=minGridCol, line width=0mm}}
+\tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
+\tikzset{myFaintAxisLine/.style={line width=0.3mm,color=black, opacity=0.3}}
+\tikzset{myGraphPerm/.style={color=black,thick}}
+\tikzset{myGraphPermGray/.style={color=black,ultra thin}}
+
+
+
+\tikzset{myAngle/.style={thin,color=black}}
+\newcommand\onelabel[6]{
+	\tkzMarkAngle[myAngle,size =#1]({#2},{#3},{#4})
+	\tkzLabelAngle[pos=#5 ]({#2},{#3},{#4}){\footnotesize ${#6}$}
+}
+
+
+
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+%%{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+%\titlespacing*{\chapter}{0pt}{-50pt}{40pt}
+{\LARGE\bfseries}
+{\chaptertitlename:~\thechapter \vspace{0cm}} {1em} {}
+\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\title{Properties of curves and applications of differentiation }
+\author{Kh notes}
+\date{}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+%----------------------Triangles------------------------------------------
+\newcommand{\x}{0}
+\newcommand{\y}{0}
+\newcommand\triangleSAS[7]{
+	\renewcommand{\x}{0};
+	\renewcommand{\y}{0};
+	\coordinate (R) at (#5,#6);
+	%\filldraw[red](\x,\y) circle [radius=1pt];
+	%\filldraw[](0,0) circle[radius=1pt];
+	\begin{scope}[ xshift=#5cm, yshift=#6cm,rotate around={#4:(R)}, scale around={#7:(R)} ]
+		%\filldraw[blue](\x,\y) circle [radius=1pt];
+		\coordinate(O) at(0,0);
+		\coordinate(B) at (#3,0);
+		\coordinate(A) at ({#1*cos(#2)},{#1*sin(#2)});		
+	\end{scope}
+	
+}
+
+
+%----------------------Bounding Boxes------------------------------------------
+\newcommand\brect[2]{
+	\draw[myBound](-#1,-#2)rectangle(#1,#2);
+	%backcolour
+	\draw[myBound, opacity=0.1, xstep=0.5cm, ystep=0.5cm](-#1,-#2)grid(#1,#2);
+	\draw[myBound](0,0)circle[radius=2pt];
+}
+\begin{document}
+	\maketitle
+	\tableofcontents
+\chapter{Properties of curves}
+\section{Review Questions}
+\subsection{Some fundamental derivatives:}
+\def\arraystretch{2}
+\setlength\tabcolsep{1cm}
+\newcommand{\sep}{0.25cm}
+\begin{center}
+	\begin{tabular}{| M | M |} \hline
+		\text{Function} & \text{Derivative} \\\hline
+		f(x)=x^n  & \displaystyle f'(x)=nx^{n-1}~~ (n \in \mathbb{R})\\ [\sep] \hline
+		f(x)=e^x  & \displaystyle f'(x) =e^x\\ [\sep] \hline
+		f(x)=\ln x  & \displaystyle f'(x) =\frac{1}{x}\\ [\sep] \hline
+		f(x)=\sqrt{x}  & \displaystyle f'(x) =\frac{1}{2 \sqrt{x} }\\ [\sep] \hline
+		f(x)=\sin{x}  & \displaystyle f'(x) =\cos{x}\\ [\sep] \hline
+		f(x)=\cos{x}  & \displaystyle f'(x) =-\sin{x}\\ [\sep] \hline
+		f(x)=\tan{x}  & \displaystyle f'(x) =\sec^2{x}\\ [\sep] \hline
+	\end{tabular}
+\end{center}
+\subsection{Rules of differentiation:}
+Chain Rule:
+\begin{align*}
+	y&= g(u_{(x)})\\
+	\frac{dy}{dx} &= g'(u_{(x)} )u'_{(x)}
+\end{align*}
+Product Rule:
+\begin{align*}
+	y&= u_{(x)}v_{(x)}\\
+	\frac{dy}{dx} &= u_{(x)}v'_{(x)} +u'_{(x)}v_{(x)}
+\end{align*}
+Quotient Rule:
+\begin{align*}
+	y&= \frac{u_{(x)}}{v_{(x)}}\\
+	\frac{dy}{dx} &= \frac{ u'_{(x)}v_{(x)} - u_{(x)}v'_{(x)} }{ [ v_{(x)} ]^2 }
+\end{align*}
+
+
+\newpage
+\section{Tangents}
+\begin{itemize}
+	\item The tangent to a curve at a point A is the best approximating straight line to the curve at point A.
+	\item (Leibniz definition) Tangent to the curve $y=f(x)$ at the point $(a,f(a))$ is the line through the infinitely close pair of points either side of $f(a)$
+	$$\frac{y-f(a)}{x-a} =\lim\limits_{h\to 0}\frac{f(a+h)-f(a)}{h}$$
+	\item It is a single point of contact with the curve (although it may intersect the curve at some other point)
+\end{itemize}\vspace{1cm}
+
+\begin{center}
+	
+
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-14,0)--(14,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,7)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+
+\begin{scope}[yscale=1.5]
+	\draw[yscale=1,xscale=1,domain=-11:10,smooth,variable=\x,blue, thick, <->] plot ({\x},{  -0.01*(\x+9)*(\x-9)*(\x+1)    });
+		\renewcommand{\x}{7}
+		\coordinate (A) at  (\x,0);
+		\coordinate (A') at  (\x, {  -0.01*(\x+9)*(\x-9)*(\x+1)    } );
+		\draw[dashed, red, thick](A)node[below]{$a$} -- (A');
+		
+				\renewcommand{\x}{7}
+		\newcommand{\calc}{0};
+		\renewcommand{\calc}{ -0.01*( 3*(\x)^2 +2*\x -81) };	
+		\draw[yscale=1,xscale=1,domain=-3:3,smooth,variable=\t,red, thick] plot ( {\x+\t} ,{ -0.01*(\x+9)*(\x-9)*(\x+1) + \t*\calc    });
+	
+	\end{scope}
+		\fill[red](A') circle [radius=4pt];
+		\draw[](11,6)node[left]{$y=f(x)$};
+\end{tikzpicture}\vspace{1cm}
+
+
+
+\hrule\vspace{0.5cm}
+For the function $y=f(x)$, and some $x=a$
+\begin{itemize}
+\item $(a,f(a))$ is on the curve 
+\item $f'(a)$ is the gradient of the curve at $x=a$
+\end{itemize}
+\Large
+\begin{alignat*}{2}
+&&\frac{y-f(a)}{x-a}&=f'(a) \\
+&\Rightarrow& y&= f'(a)(x-a) + f(a)
+\end{alignat*}
+\normalsize
+Is the equation of the tangent line
+\vspace{0.5cm}\hrule
+\end{center}
+\newpage
+\subsection{Horizontal Tangents}
+Horizontal tangents have a gradient of 0. \\
+These will be very important later, when we investigate stationary points in more detail.\\\\
+
+
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-14,0)--(14,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,7)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+	
+	\begin{scope}[yscale=1.5]
+		\draw[yscale=1,xscale=1,domain=-11:10,smooth,variable=\x,blue, thick, <->] plot ({\x},{  -0.01*(\x+9)*(\x-9)*(\x+1)    })node[below]{$y=f(x)$};
+		\renewcommand{\x}{-5.54}
+		\coordinate (A) at  (\x,0);
+		\coordinate (A') at  (\x, {  -0.01*(\x+9)*(\x-9)*(\x+1)    } );
+		\draw[dashed, red, thick](A)node[above]{$a$} -- (A');
+			\draw[yscale=1,xscale=1,domain=-11:-1,smooth,variable=\t,red, thick] plot ({\t},{  -0.01*(\x+9)*(\x-9)*(\x+1)    })node[right]{$y=f(a)$};
+		\renewcommand{\x}{4.873}
+		\coordinate (B) at  (\x,0);
+		\coordinate (B') at  (\x, {  -0.01*(\x+9)*(\x-9)*(\x+1)    } );
+		\draw[dashed, red, thick](B)node[below]{$b$} -- (B');
+			\draw[yscale=1,xscale=1,domain=1:8,smooth,variable=\t,red, thick] plot ({\t},{  -0.01*(\x+9)*(\x-9)*(\x+1)    }) node[right]{$y=f(b)$};
+		
+	\end{scope}
+		\fill[red](A') circle [radius=4pt];
+		\fill[red](B') circle [radius=4pt];
+
+\end{tikzpicture}\vspace{1cm}
+
+In general, we will need to find where the stationary points are:\\
+
+\hrule\vspace{0.5cm}
+\Large
+\begin{itemize}
+	\item Find $f'(x)$
+	\item Solve $f'(x) = 0$
+	\item Substitue the solution(s) into $f(x)$ to find the constant terms for the horizontal line equation
+\end{itemize}
+\normalsize
+\vspace{0.5cm}\hrule
+
+
+\newpage
+\subsection{Ex13A}
+\begin{itemize}
+	\item Tangent equations from root and polynomial functions
+	\item Horzontal tangents
+	\item Natural log and exponent questions
+	\item Concept questions 
+\end{itemize}
+
+\textbf{3 worked examples} 
+\begin{itemize}
+	\item Polynomial
+	\item Log or exponential
+	\item Conceptual
+\end{itemize}
+\newpage
+\includepdf[pages={1-},scale=0.85]{TangentQuestions.pdf} 
+\newpage
+\section{Normals}
+\newcommand{\ang}{50}
+\newcommand{\ext}{5}
+The product of the gradients of perpedicular lines = -1\\
+There are various proofs, one example below.\\
+\begin{center}
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-5,0)--(5,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,5)node[above]{$y$};
+	%\draw[black](0,0) circle [radius=5pt];
+	\draw[yscale=1,xscale=1,domain=-\ext:\ext,smooth,variable=\t,blue, thick] plot (  {\t*cos(\ang)},{ \t*sin(\ang)    });
+	\draw[yscale=1,xscale=1,domain=-\ext:\ext,smooth,variable=\t,red, thick] plot (  {\t*cos(\ang + 90)},{ \t*sin(\ang + 90)    });
+	\coordinate (O) at (0,0);
+	\coordinate (A) at (  {\ext*cos(\ang)} ,{ \ext*sin(\ang)    });
+	\coordinate (X) at ( {\ext*cos(\ang)} ,0);
+	\coordinate (A') at (  {\ext*cos(\ang + 90)},{ \ext*sin(\ang +90)    });
+	\coordinate (X') at ({\ext*cos(\ang + 90)},0);
+	\onelabel{0.6}{X}{O}{A}{0.85}{\theta}
+	
+	\draw[dashed, blue](A) -- (X)node[midway, right]{\scriptsize $\sin(\theta)$};
+	\draw[dashed, blue](O) -- (X)node[midway, above, xshift=0.3cm]{\scriptsize $\cos(\theta)$};
+		\tkzMarkRightAngle[myLine,size=.4](A',O,A)
+			\draw[dashed, red](A') -- (X')node[midway, left]{\scriptsize $\sin( \theta +\frac{ \pi }{2} )$};
+		\draw[dashed, red](O) -- (X')node[midway, above, xshift=-0.1cm]{\scriptsize $\cos(\theta + \frac{ \pi }{2} )$};
+		
+		\draw[blue](8,4)node[right]{\Large $m=\frac{\sin(\theta)}{\cos(\theta)}$};
+		\draw[red](8,2)node[right]{\Large $m_{\perp}=\frac{\sin(\theta +\frac{ \pi }{2} )}{\cos(\theta +\frac{ \pi }{2})}= - \frac{\cos(\theta)}{\sin(\theta)}$};
+			\draw[black](8,0)node[right]{\Large $m \times m_{\perp} = -1$};
+\end{tikzpicture}\vspace{1cm}
+
+\hrule\vspace{0.5cm}
+For the function $y=f(x)$, and some $x=a$
+\begin{itemize}
+	\item $(a,f(a))$ is on the curve 
+	\item $\displaystyle -\frac{1}{f'(a)}$ is the gradient of the \textbf{normal to the curve} at $x=a$
+\end{itemize}
+\Large
+\begin{alignat*}{2}
+	&&\frac{y-f(a)}{x-a}&= -\frac{1}{f'(a)} \\
+	&\Rightarrow& y&=  -\frac{1}{f'(a)}(x-a) + f(a)
+\end{alignat*}
+\normalsize
+Is the equation of the tangent line
+\vspace{0.5cm}\hrule\vspace{0.5cm}
+
+
+\begin{tikzpicture}[xscale= 0.6,yscale=0.6]
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-14,-5) grid(14,6);
+	\draw[myAxisLine, <->](-8,0)--(17,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-5)--(0,5)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+	\draw[yscale=1,xscale=1,domain=-8:11,smooth,variable=\x,blue, thick, <->] plot ({\x},{  0.01*(\x+9)*(\x-9)*(\x-1)    })node[left]{$y=f(x)$};
+	%\draw[yscale=1,xscale=1,domain=-11:12,smooth,variable=\x,green, thick, dashed] plot ({\x},{  0.01*(3*(\x)^2 -2*\x -81)    });
+	\draw[yscale=1,xscale=1,domain=3:12,smooth,variable=\x,red, thick] plot ({\x},{  0.52*\x -5.56   })node[right]{Tangent gradient = $f'(a)$};
+	\draw[yscale=1,xscale=1,domain=4:9,smooth,variable=\x,teal, thick] plot ({\x},{ (-1/0.52)*\x + 11.542  })node[right]{Normal gradient = $-\frac{1}{f'(a)}$};
+
+	
+	\draw[black](7,-1.92) circle [radius=5pt];
+	\draw[red ,dashed] (7,0)node[above]{$a$} -- (7,-1.92);
+
+\end{tikzpicture}
+
+
+\end{center}
+\subsection{Ex 13B}
+\newpage
+\includepdf[pages={1-},scale=0.85]{NormalQuestions.pdf} 
+\newpage
+\section{Increasing and Decreasing}
+When analysing functions, we are often interested in the intervals across which the function is  increasing or  decreasing.
+\begin{itemize}
+	\item If the gradient is entirely positive on an interval, the function is increasing on that interval.
+	\item If the gradient is entirely negative on an interval, the function is decreasing on that interval.
+\end{itemize}
+If a function changes from increasing to decreasing, it must pass through a stationary point (or cross a region where the function is not differentiable)\\\\
+Hnece we need to divide up the domain into intervals bounded by stationary points  and points where the function is not differentiable.\\
+Finding a single gradient on each interval will tell us whether the function is increasing or decreasing.\\\\
+We can communicate all of this using a \textbf{sign diagram}.\\\\
+\subsection{Basic sign diagram example}
+
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+        %\draw[myMinGrid, xstep=1cm, ystep=1cm](-6,-5) grid(6,5);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,4)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\draw[domain=-4:5,smooth,variable=\x,blue, thick, <->] plot ({\x},{ 0.1*\x^3  -0.15*((\x)^ 2)  -1.8*(\x) +1  });
+			\renewcommand{\y}{-7}
+			\renewcommand{\x}{-2}
+			\newcommand{\shft}{3}
+		\coordinate (A) at  (\x,-5);
+		\coordinate (A') at  (\x,5);
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+		\renewcommand{\x}{3}
+		\coordinate (B) at  (\x,-5);
+		\coordinate (B') at  (\x,5);
+		\draw[red, dashed](A) -- (A');
+		\draw[red, dashed](B) -- (B');
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$3$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $+$ }node[above, pos=0.5]{\Huge $-$}node[above, pos=0.85]{\Huge $+$ };
+		
+		\draw[myAxisLine, red, ultra thick, <->](-1.9,\y+\shft)--(2.9,\y+\shft)node[midway, above]{Decreasing};
+		\draw[myAxisLine, red, ultra thick, <->](-6,\y+\shft)--(-2.1,\y+\shft)node[midway, above]{Increasing};
+		\draw[myAxisLine, red, ultra thick, <->](3.1,\y+\shft)--(6,\y+\shft)node[midway, above]{Increasing};
+		
+		\draw[](-7,-5.5)node[right]{\textbf{Sign diagram:} $f'(x)$ either calculated or observed from a graph };
+		
+	\end{tikzpicture}\vspace{1cm}
+\end{center}
+\newpage
+\begin{figure}[!h]
+\includepdf[scale=0.85]{SignDiagram_Example.pdf} 
+\end{figure}
+
+\newpage
+\subsection{Sign diagram example with discontinuites}
+Below is the graph of $$y=\frac{x-3}{x^2-4}$$
+Because division by 0 is undefined, the graph has vertical asymptotes when $x^2-4 =0$\\
+(i.e when $x=2$ and $x=-2$ )\\\\
+The derivative is $\displaystyle \frac{dy}{dx} = \frac{-x^2+6x-4}{(x^2-4)^2} $ and using a graphics calulator to solve $-x^2+6x-4=0$, \\\\
+we have stationary points at $x\approx 0.764$ and $x\approx 5.236$
+\begin{center}
+\begin{tikzpicture}[scale=1]
+	 \clip(-8,-9) rectangle (8,6);
+	%\draw[myMinGrid, xstep=1cm, ystep=1cm](-8,-9) grid(8,6);
+	\draw[myAxisLine, <->](-7.5,0)--(7.5,0)node[right]{$x$};
+	\draw[myAxisLine, <->](0,-3)--(0,5)node[above]{$y$};
+	\draw[black](0,0) circle [radius=5pt];
+	
+
+		\draw[yscale=1,xscale=1,domain=-1.7:1.94, samples=100,variable=\x,blue, thick, <->] plot ({\x},{  (\x-3)/((\x)^2-4)   });
+		\draw[yscale=1,xscale=1,domain=-7:-2.3, samples=100,variable=\x,blue, thick, <->] plot ({\x},{  (\x-3)/((\x)^2-4)   });
+		\draw[yscale=1,xscale=1,domain=2.06:7, samples=100,variable=\x,blue, thick, <->] plot ({\x},{  (\x-3)/((\x)^2-4)   });
+		\renewcommand{\y}{-8}
+		\renewcommand{\x}{-2}
+		\coordinate (A) at  (\x,-5);
+		\coordinate (A') at  (\x,5);
+		\draw[dashed, teal, thick](A) -- (A');
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+		\renewcommand{\x}{2}
+		\coordinate (B) at  (\x,-5);
+		\coordinate (B') at  (\x, 5 );
+		\draw[dashed, teal, thick](B) -- (B');
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$2$};
+		
+	
+		\renewcommand{\x}{0.764}
+		\newcommand{\shft}{3}
+		\coordinate (C) at  (\x,-5);
+		\coordinate (C') at  (\x,5);
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0.764$};
+		\renewcommand{\x}{ 5.236}
+		\coordinate (D) at  (\x,-5);
+		\coordinate (D') at  (\x,5);
+		\draw[red, dashed](C) -- (C');
+		\draw[red, dashed](D) -- (D');
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$5.236$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $-$ }node[above, pos=0.45]{\Huge $-$}node[above, pos=0.6]{\Huge $+$ }node[above, pos=0.75]{\Huge $+$ }node[above, pos=0.93]{\Huge $-$ };
+		
+		\draw[myAxisLine, red, ultra thick, <->](-6,\y+\shft)--(-2.1,\y+\shft)node[midway, above]{Decreasing};
+		\draw[myAxisLine, red, ultra thick, <->](-1.9,\y+\shft)--(0.7,\y+\shft)node[midway, above]{Decreasing};
+		\draw[myAxisLine, red, ultra thick, <->](0.9,\y+\shft)--(1.9,\y+\shft)node[midway, above]{Increasing};
+		\draw[myAxisLine, red, ultra thick, <->](2.1,\y+\shft)--(5.1,\y+\shft)node[midway, above]{Increasing};
+		\draw[myAxisLine, red, ultra thick, <->](5.3,\y+\shft)--(7,\y+\shft)node[midway, above]{Decreasing};
+		
+		\draw[](-7,-6.5)node[right]{\textbf{Sign diagram:} $f'(x)$ either calculated or observed from a graph };
+		\draw[blue](10,5)node[right]{$y=f(x)$};
+\end{tikzpicture}
+\end{center}
+\subsection{Ex 13 C}
+\newpage
+	\includepdf[scale=0.85, pages={1-}]{IncreasingDecreasingQuestions.pdf} 
+\newpage
+\section{Stationary Points}
+\subsection{Turning points (minima, maxima)}
+Frrom our `standard' graph  we can identify a couple of key features.
+$$f(x) = x^3-1.5x^2-18x+1$$
+
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+		\draw[domain=-4.7:5.85,smooth,variable=\x,blue, thick, <->] plot ({\x}, {\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 } );
+		\renewcommand{\y}{-7}
+		\renewcommand{\x}{-2}
+		\newcommand{\shft}{3}
+		\coordinate (A) at  (\x,0);
+		\coordinate (A') at  (\x,{\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 });
+		%\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+		\renewcommand{\x}{3}
+		\coordinate (B) at  (\x,0);
+		\coordinate (B') at  (\x,{\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 });
+		\draw[red, dashed](A) -- (A');
+		\draw[red, dashed](B) -- (B');
+		
+		\coordinate (S1) at (-2,23);
+		\coordinate (S2) at (3,-39.5);
+		\coordinate (O) at (0,0);
+		\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+		\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+		
+		\coordinate (S1') at (-5,50);
+			\coordinate (S2') at (5,-50);
+		\draw[thick, red, ->](S1') node[anchor = south]{Local maximum}-- (  $ (S1')!0.7!(S1) $  );
+		\draw[thick, red, ->](S2') node[anchor = north]{Local minimum}-- (  $ (S2')!0.7!(S2) $  );
+		
+		\draw[blue](-8,-55)node[right]{Global minimum as $x \to -\infty$};
+		\draw[blue](8,55)node[left]{Global maximum as $x \to \infty$};
+
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+If we do not have the graph we can classify the stationary points using a sign diagram.
+\begin{center}
+	\begin{tikzpicture}
+			\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,3);
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{-2}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+			\draw[thick,red, yscale=1.5, <->] ([shift=(0:1.5cm)]\x,\y+0.75) arc (20:160:1.5cm);
+			\renewcommand{\x}{3}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$3$};
+			\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $+$ }node[above, pos=0.5]{\Huge $-$}node[above, pos=0.85]{\Huge $+$ }node[right]{$f'(x)$};
+			\draw[thick,red, yscale=1.5, <->] ([shift=(0:1.5cm)]\x,\y+1.75) arc (-20:-160:1.5cm);
+	\end{tikzpicture}
+\end{center}
+\newpage
+
+\subsection{Stationary points of inflection}
+Stationary points are not necessarily local maxima or minima. \\
+They may be \textbf{inflection} points. \\
+This is where the shape of the curve is changing, but the gradient is not changing sign.
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-3.5) grid(8,3.5);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-2:3.7,smooth,variable=\x,blue, thick, <->] plot ({\x}, {2*(\x^3)*(\x-3)  - 15 } ) node[anchor = south]{$f(x)=2x^4 - 6x^3 -15$};
+
+
+			
+			\coordinate (S1) at (0,-15);
+			\coordinate (S2) at (2.25,-32.086);
+			\coordinate (O) at (0,0);
+			\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+			\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+			
+			\coordinate (S1') at (-5,-50);
+			\coordinate (S2') at (5,-50);
+			\draw[thick, red, ->](S1') node[anchor = north]{Inflection point}-- (  $ (S1')!0.7!(S1) $  );
+			\draw[thick, red, ->](S2') node[anchor = north]{Local minimum}-- (  $ (S2')!0.7!(S2) $  );
+		\end{scope}
+		
+	\end{tikzpicture}
+\end{center}
+\textbf{Constructing a sign diagram:}
+\tiny
+\begin{alignat*}{2}
+	&&f(x)&=2x^4 - 6x^3 -15 \\
+	&& f'(x)&=  8x^3-18x^2\\
+	&& &=  2x^2(4x-9)\\
+	&\text{Set}\qquad& f'(x)&=0\\
+	&\Rightarrow&2x^2(4x-9)&=0\\
+	&&x&=0 \text{ and } x=\frac{9}{4}
+\end{alignat*}
+\normalsize
+\begin{center}
+	\begin{tikzpicture}
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,2.5);
+		\renewcommand{\y}{0}
+		\renewcommand{\x}{0}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+		%\draw[ultra thick,blue, yscale=1.5, ->] ([shift=(0:1.5cm)]\x,\y+0.75) arc (0:360:1.5cm);
+		
+		\draw[thick,red, yscale=1.5, ->] ([shift=(210:1cm)]\x,\y+2) arc (210:270:1cm);
+		
+			\draw[thick,red, yscale=1.5, ->] ([shift=(90:1cm)]\x,\y) arc (90:30:1cm);
+		\renewcommand{\x}{2.25}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$\frac{9}{4}$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.2]{\Huge $-$ }node[above, pos=0.57]{\Huge $-$}node[above, pos=0.85]{\Huge $+$ }node[right]{$f'(x)$};
+		\draw[thick,red, yscale=1.5, <->] ([shift=(-30:1.5cm)]\x,\y+2) arc (-30:-150:1.5cm);
+	\end{tikzpicture}
+\end{center}
+If the sign of the gradient repeats across a staionary point, we will have an inflection point.\\
+Note: Inflection points can be at stationary points, or not. Consequently we classify the one above as a \textbf{stationary inflection point}\\
+Please note: Summary chart in the textbook.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.2]{s_point_properties.pdf} 
+\end{figure}
+\newpage
+\subsection{Greatest or least values (testing boundaries)}
+If we are given a function which is bounded on an interval, and are finding the greatest/least values on that interval:
+we need to 
+\begin{itemize}
+	\item find the values of the stationary points
+	\item find the values at the end points of the function (as these could be geater/less than the staionary point values).
+	\end{itemize}
+	Following the example from the book using
+	$$y=x^3-6x^2 +5  \text{~~On the interval } -2 \leqslant x \leqslant 5$$
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-3,0)--(8,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-2.5:6.5,smooth,variable=\x,blue, thick, dashed, <->] plot ({\x}, {\x^3  -6*((\x)^ 2) +5} );
+			\draw[domain=-2:5,smooth,variable=\x,blue, thick, *-*] plot ({\x}, {\x^3  -6*((\x)^ 2) +5} );
+			\renewcommand{\y}{50}
+			\renewcommand{\x}{-2}
+			\newcommand{\shft}{3}
+			\coordinate (A) at  (\x,\y);
+			\coordinate (A') at  (\x, -\y ) ;
+			%\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$-2$};
+			\renewcommand{\x}{5}
+			\coordinate (B) at  (\x,\y);
+			\coordinate (B') at  (\x,  -\y );
+			\draw[teal, ultra thin](A) -- (A');
+			\draw[teal, ultra thin](B) -- (B');
+			
+			\coordinate (S1) at (0,5);
+			\coordinate (S2) at (4,-27);
+			\coordinate (O) at (0,0);
+			\draw[red] ([shift=(0:-1.5)] S1) --  ([shift=(0:1.5)] S1);
+			\draw[red] ([shift=(0:-1.5)] S2) --  ([shift=(0:1.5)] S2);
+			
+			\coordinate (S1') at (2,40);
+			\coordinate (S2') at (2,-40);
+			\draw[thick, red, ->](S1') node[anchor = south]{Local maximum: $(0,5)$}-- (  $ (S1')!0.7!(S1) $  );
+			\draw[thick, red, ->](S2') node[anchor = north]{Local minimum: $(4,-27)$}-- (  $ (S2')!0.7!(S2) $  );
+			
+			\draw[blue](-2,-27)node[left]{Boundary:  $(-2,-27)$};
+			\draw[blue](5,-20)node[right]{Boundary:  $(5,-20)$};
+			
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=16cm]{greatestleast-boundaries.pdf} 
+\end{figure}
+
+
+\newpage
+\subsection{Ex 13D}
+
+
+\newpage
+\includepdf[scale=0.85, pages={1-}]{StationaryPointsQuestions.pdf} 
+\newpage
+\section{Shape}
+Looking at the shape of of the graph below, we can see that over a certain interval, the curve is turning downwards \textbf{it is concave down}, and on then it changes to be turning upwards \textbf{concave up}.
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-4) grid(8,4);
+		\draw[myAxisLine, <->](-6,0)--(6,0)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,3)node[above]{$y$};
+		\draw[black](0,0) circle [radius=5pt];
+		\begin{scope}[yscale=0.05]
+			\draw[domain=-4.7:5.85,smooth,variable=\x,blue, thick, <->] plot ({\x}, {\x^3  -1.5*((\x)^ 2)  -18*(\x) +1 } )node[left]{$f(x)=x^3-1.5x^2-18x+1$};
+				\draw[thick,red, yscale=20, dashed, <->] ([shift=(20:1.5cm)]-2,-1) arc (20:160:1.5cm);
+				\draw[thick,red, yscale=20, dashed, <->] ([shift=(200:1.5cm)] 3,0) arc (200:340:1.5cm);
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+If the curve is \underline{concave down} the \textbf{gradient} is \underline{decreasing}, so we consider the \underline{second derivative}
+\begin{alignat*}{4}
+		 &                     & \text{Leibnitz}&              &\qquad \text{or}\qquad  & &\text{Newton}&\\
+	 &                     & \frac{d}{dx}(\frac{dy}{dx}) &<  0 & & & (f'(x))'&<0\\
+	 &\Rightarrow\qquad& \frac{d^2y}{dx^2}                 &<0 & &\Rightarrow\qquad&f''(x)&<0\\
+\end{alignat*}
+Similarly, if the curve is \underline{concave up}  the \textbf{gradient} is \underline{increasing}, so 
+\begin{alignat*}{4}
+	&\qquad& \frac{d^2y}{dx^2}                 &>0 & \qquad \text{or}\qquad &\qquad&f''(x)&>0\\
+\end{alignat*}
+We can contruct a sign diagram for (in this case) $f''(x) = 6x-3$, and $f''(x) = 0$ when $x=\frac{1}{2}$
+\begin{center}
+	\begin{tikzpicture}
+		\draw[myMinGrid, white, xstep=1cm, ystep=1cm](-8,-1) grid(8,1);
+		\renewcommand{\y}{0}
+		\renewcommand{\x}{0.5}
+		\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0.5$};
+		\draw[myAxisLine, ultra thick, <->](-7,\y)--(7,\y)node[above, pos=0.3]{\Huge $-$ }node[above, pos=0.75]{\Huge $+$ }node[right]{$f''(x)$};
+	
+	\end{tikzpicture}
+\end{center}
+We can also observe that there is an \textbf{non-stationary inflection point} at $x=\frac{1}{2}$, $f(\frac{1}{2})=-\frac{37}{4}$\\\\
+
+\subsection{Ex 13E}
+\newpage
+\includepdf[scale=0.85, pages={1-}]{ShapeQuestions.pdf} 
+\newpage
+\section{Inflection Points}
+At an inflection point:
+\begin{itemize}
+	\item the tangent line crosses the curve
+	\item the shape of the curve is changing from concave up to concave down (or vice versa).
+\end{itemize}
+\begin{center}
+	\begin{tikzpicture}[xscale= 1,yscale=1]
+		\draw[myMinGrid, xstep=1cm, ystep=1cm](-4,-7) grid(11,6);
+		\draw[myAxisLine, <->](-4,-1)--(9,-1)node[right]{$x$};
+		\draw[myAxisLine, <->](0,-3)--(0,5)node[above]{$y$};
+		\draw[black](0,-1) circle [radius=5pt];
+		\begin{scope}[yscale=0.2, xscale=2]
+			\draw[domain=-1.3:4.7,smooth,variable=\x,blue, thick, <->] plot ({\x}, { 0.4*(\x^3)*(5-\x) } )node[left]{$f(x)=x^3(5-x)+1$};
+			\renewcommand{\x}{2.5}
+			\newcommand{\calc}{0};
+			\renewcommand{\calc}{ 0.4*( (\x^2)*(15-4*\x) };	
+			\draw[yscale=1,xscale=1,domain=-1:1,smooth,variable=\t,red, thick] plot ( {\x+\t} ,{ 0.4*(\x^3)*(5-\x) + \t*\calc    });
+			
+			\draw[yscale=1,xscale=1,domain=-1:1,smooth,variable=\t,red, thick] plot ( {\t} ,{ 0    });
+			
+
+
+		\end{scope}
+		
+		\begin{scope}[yshift = -4cm, xscale=2]
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{0}
+			\draw[myFaintAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+			\renewcommand{\x}{3.75}
+			\draw[myFaintAxisLine,ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$3.75$};
+			\draw[myFaintAxisLine, ultra thick, <->](-2,\y)--(5,\y)node[above, pos=0.15]{\Huge $+$ }node[above, pos=0.5]{\Huge $+$}node[above, pos=0.9]{\Huge $-$ }node[right]{$f'(x)$};
+		\end{scope}
+		\begin{scope}[yshift = -6cm, xscale=2]
+			\renewcommand{\y}{0}
+			\renewcommand{\x}{0}
+			\draw[myAxisLine, ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$0$};
+			\renewcommand{\x}{2.5}
+			\draw[myAxisLine,ultra thick](\x,\y+0.25)--(\x,\y-0.25)node[below]{$2.5$};
+			\draw[myAxisLine, ultra thick, <->](-2,\y)--(5,\y)node[above, pos=0.15]{\Huge $-$ }node[above, pos=0.5]{\Huge $+$}node[above, pos=0.8]{\Huge $-$ }node[right]{$f''(x)$};
+		\end{scope}
+		%\fill[red](S2 |- S1) circle [radius=5pt];
+	\end{tikzpicture}
+\end{center}
+We can identify inflection points by
+\begin{itemize}
+	\item Solving $f''(x) = 0$
+	\item Then using a sign diagram to verify that the points we have found are actually inflection points.\\
+	The sign diagram must \textbf{change signs} across the 0 for the points to be inflection points.
+\end{itemize}
+\subsection{Ex 13F}
+
+\newpage
+\includepdf[scale=0.85, pages={1-}]{InflectionPointsWorkedExample.pdf} 
+\newpage
+\section{Understanding functions and their derivatives}
+
+\chapter{Applications of differentiation}
+
+
+
+
+
+
+
+\newpage
+% I prefer the alignment at the equal sign.
+\begin{alignat*}{2}
+	&\text{The equation is:}\qquad & 9a-4 &= 14+3a\\
+	&\text{Subtract $3a$:} & 6a-4 &= 14\\
+	&\text{Subtract 4:} & 6a &= 18\\
+	&\text{Divide by 6:} & a &= 3
+\end{alignat*}
+
+$$A\widehat{B}C$$
+$$A\widehat{BC}C$$
+$$A\hat{B}C$$
+$$N \tilde{a}$$
+$$X \sim \mathcal{N}(\mu,\,\sigma^{2})$$
+
+\newpage
+
+\begin{center}
+	\begin{tikzpicture}[scale=0.75]
+		\draw[myBound](0,-0.5)rectangle(16,8);
+		\begin{axis}[
+			scale only axis,
+			width=16cm, 
+			height=8cm,
+			restrict y to domain = 0:100,
+			axis line style=ultra thick, axis x line=center,axis y line=center,ymajorgrids,yminorgrids,
+			minor y tick num=0, xmajorgrids, xminorgrids, minor x tick num=0,major grid style=white, minor grid style=myMinGrid, xtick={-4,-3.5,...,3.5}, ytick={-4,-3,...,6},
+			xlabel={$t$}, ylabel={$s(t)$}, xlabel style={below right}, ylabel style={above}, xmin=-4.5, xmax=4, ymin=-5, ymax=7]
+			\addplot [myGraphPerm, domain=-6:6, smooth] { (x-3)/((x^2) -4) };
+			\addplot [myGraphPermGray, domain=-4:0, smooth,dashed] {3*x^3-2*x^2-5*x};
+			\addplot[] coordinates {(2,-1)}node[right]{$s(t)=3t^3-2t^2-5t$ };
+		\end{axis}
+\end{tikzpicture}\end{center}\normalsize
+
+\begin{tikzpicture}
+	\begin{axis}[
+		axis lines=center,
+		xlabel = {$x$}, xlabel style = {anchor=west},
+		ylabel = {$y$},
+		xmin=-9, xmax=9, xtick={-8,-6,...,8},
+		extra  x ticks = {0},
+		ymin=-27,  ymax=27,
+		tick label style = {font=\scriptsize},
+		domain = -8.5:8.5,
+		restrict y to domain = -1000:1000,
+		no marks,
+		every axis plot post/.append style={very thick},
+		]
+		\addplot +[samples=101]
+		{(3)/(x+3.5)^2 + (3)/(3.5-x)^2 + 3*e^(-((0-x)^2)/(2 * 1^2)) - 10};
+		\addplot +[samples=101]
+		{(3)/(x^2 - 4)};
+	\end{axis}
+\end{tikzpicture}
+
+
+
+
+
+
+
+
+
+\end{document}
