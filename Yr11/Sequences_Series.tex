@@ -10,6 +10,7 @@
 \tikzset{myAxisLine/.style={line width=0.3mm,color=black}}
 \tikzset{myLine/.style={thick,color=black}}
 \usepackage{enumitem}
+\usepackage{multicol}
 \usepackage{array}
 \newcolumntype{M}{> {$} l < {$}}
 \usepackage{mathtools}
@@ -77,25 +78,34 @@
 	\maketitle
 \tableofcontents
 \newpage
-\section{Introduction (Number Sequences)}
+\section*{Introduction Problem}
+\begin{figure}[!h]
+	\centering
+\includegraphics[width=17cm]{ChessProblem.png} 
+\end{figure}
+
+\textbf{Question: How do we go about solving this problem mathematically?}
+
+
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=2]
 	\draw[](0,0)rectangle(4,4);
 	\draw[xstep=0.5, ystep=0.5](0,0)grid(4,4);
 	\newcommand{\shft}{0.5}
 	\foreach \r in {0,1,2,3}{
 		\foreach \c in {0,1,2,3}{
-		\fill[](\c,\r +\shft)rectangle(\c +\shft,\r +2*\shft);
+		\fill[gray](\c,\r +\shft)rectangle(\c +\shft,\r +2*\shft);
 	}
 	
 	}
 		\foreach \r in {0,1,2,3}{
 		\foreach \c in {0,1,2,3}{
-			\fill[](\c +\shft,\r )rectangle(\c +2*\shft,\r +\shft);
+			\fill[gray](\c +\shft,\r )rectangle(\c +2*\shft,\r +\shft);
 		}
 	}
 \end{tikzpicture}
 \end{center}
+\newpage
 Grains of rice problem.\\
 How do we define this problem mathematically?
 \begin{itemize}
@@ -117,6 +127,58 @@ Consider:
 		=2^4
 \end{align*}
 \newpage
+\section*{Number Sequences}
+\Large
+\hrule\vspace{1cm}
+
+\textbf{A number sequence is an ordered list of numbers defined by a rule:}
+\vspace{1cm}\hrule\vspace{1cm}
+
+A couple of examples from your past
+
+A linear sequence
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=17cm]{matches_06.png} 
+\end{figure}
+
+A quadratic sequence
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=17cm]{QPattern.pdf} 
+\end{figure}
+
+
+
+\begin{itemize}
+\item We need to be able to descibe the sequence:\\
+\textbf{What is the first term? How do the terms change?}
+\item We define $u_n$ to be the $n^{th}$ term of the sequence
+\item Unless otherwise stated $u_1$ is the first term.
+\item  $\{u_n\}$ represents the whole sequence.
+\item In general we use an \textbf{explicit formula} to define the sequence\\
+for example: $\{2n-3\}$
+
+\end{itemize}
+\normalsize
+\newpage
+
+\subsection*{Ex 5A}
+\begin{multicols}{3}
+\begin{itemize}
+	\item 1: b, d
+	\item 2: c
+	\item 6
+	\item 7: d,e,h
+	\item 9: a,e,f
+	\item 10: g,h,i
+\end{itemize}	
+\end{multicols}
+
+
+\newpage
 \section{Arithmetic Sequences}
 An example of an arithmetic sequence is:
 \LARGE $$14,17, 20, 23,...$$ \normalsize
@@ -124,10 +186,7 @@ An arithmetic sequence has a common difference between the terms (in this case 3
 \begin{itemize}
 	\item We need to be able to descibe the sequence:\\
 	\textbf{The sequence has a first term of 14 and increases by 3 each time}
-	\item We define $u_n$ to be the $n^{th}$ term of the sequence
-	\item Unless otherwise stated $u_1$ is the first term.
 	\item We define $d$ as the common difference ($d=u_{n+1} - u_{n}$).
-	\item $\{u_n\}$ represents the whole sequence.
 \end{itemize}
 Note: the sequence is linear (so the difference is the gradient).
 
@@ -167,14 +226,30 @@ General term formula:
 
 \vspace{0.5cm}\hrule
 
-	
+
 \subsection{Ex 5B.1}
+\renewcommand{\labelitemii}{$\star$}
+\begin{multicols}{4}
 \begin{itemize}
-	\item Showing and proving a sequence is arithmetic, 
 	\item Finding terms 
+	\begin{itemize}
+		\item 3: a, e, 4 , 6, 7
+	\end{itemize}
 	\item Working with $k$
+		\begin{itemize}
+		\item 12: a, d, g
+	\end{itemize}
+		\item Find the general term
+	\begin{itemize}
+		\item 13
+	\end{itemize}
 	\item Inserting terms between
+			\begin{itemize}
+		\item 14, 15
+	\end{itemize}
+	
 \end{itemize}
+\end{multicols}
 %\includegraphics[page=1,scale=0.75]{ArithmeticQuestions.pdf} 
 \includepdf[pages={1-},scale=0.85]{ArithmeticQuestions.pdf} 
 \subsection{Ex 5B.2}
