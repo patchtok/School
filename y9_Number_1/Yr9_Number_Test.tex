@@ -1,0 +1,228 @@
+\documentclass[english,a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry,pdfpages}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{width=9cm, compat=1.9}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage[abs]{overpic}
+\usepackage{pict2e}
+
+\setlength{\columnsep}{1cm}
+\usepackage[inline]{enumitem}
+\usepackage{setspace}
+\usepackage{subcaption,tcolorbox}
+\usepackage{array}
+\usepackage{calc}
+\usepackage[makeroom]{cancel}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{tcolorbox}
+\renewcommand{\arraystretch}{1.5}
+\geometry{a4paper,top=1.5cm,bottom=1.5cm,right=1cm,left=1cm}
+\setlength\parindent{0pt}
+%---------------------------------------------------------------
+% line drawer number of lines, linedistance, line width, box sep
+\newcommand\lineControl[3]{
+	\vspace{0.025cm}\\\begin{tikzpicture}
+	\draw[white](0,-0.25); 
+	\foreach \y in {1,...,#1}{
+		\draw[line width=0mm](0,-\y*#2)--(#3,-\y*#2);
+	}
+	\end{tikzpicture}\vspace{0.1cm}\\
+}
+
+\newcommand\lineControlExtra[3]{
+	\begin{tikzpicture}
+	\draw[white](0,-0.25); 
+	\foreach \y in {1,...,#1}{
+		\draw[line width=0mm](0,-\y*#2)--(#3,-\y*#2);
+	}
+	\end{tikzpicture}\vspace{0.1cm}\\
+}
+%-------------------------------------------------------------
+\newcommand{\lineDist}{1}
+\newcommand{\lWid}{6}
+\newcommand{\lThick}{0.1 mm}
+\definecolor{linecolor}{RGB}{90,90,90}
+\definecolor{shadecolor}{RGB}{180,180,180}
+\definecolor{whitening}{RGB}{255,255,255}
+\newcommand{\numLines}{2}%subtract one
+\newcommand{\Qsep}{1}%separation between Question and lines
+
+\usepackage{babel}
+\usepackage[useregional]{datetime2}
+
+%----------------------------------------------------------------
+\newcommand{\wdth}{2}
+\newcommand{\hght}{1}
+%----------------------------------------------------------------
+\begin{document}
+	\begin{tabular}{|p{10cm}|p{7cm}|}\hline
+		Name &Teacher\\\hline
+	\end{tabular}\\\\
+\Large\textbf{Year 9 Number 1 Test}\normalsize\\
+\begin{tabular}{|p{4cm}|p{3cm}|}\hline
+{\begin{tabular}{p{3cm}}
+Section 1: Total	\\\hline
+~~~~~~~~~~~~~~~/47 \\
+\end{tabular}}
+&
+~~~~~~~~~~~~~~~~\%\\\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{3cm}|}\hline
+{\begin{tabular}{p{3cm}}
+Section 2: Total\\\hline
+~~~~~~~~~~~~~~~/28\\
+\end{tabular}}
+&
+~~~~~~~~~~~~~~~~\%\\\hline
+\end{tabular}\\\\
+Instructions:
+\begin{itemize}
+	\item  Working steps are required for any answer with a mark greater than 1
+	\item Calculators are \textbf{not} permitted
+	\item Extra working paper is at the end 
+\end{itemize}
+
+\textbf{Section 1}
+\begin{enumerate}
+	\item \begin{enumerate}
+\item What is the definition of a prime number?\hspace{7cm}(1 mark)
+	\lineControl{2}{1}{15}
+\item Circle the prime numbers in this list.\hspace{8cm}(2 marks)
+\begin{center}
+ 1~~~~2~~~~9~~~~11~~~~31~~~~91~~~~93~~~~97
+\end{center}
+\item If you add the prime numbers 5 and 19 you get 24.\hspace{5.5cm}(2 marks)\\
+Find two more ways of adding primes to get 24:\vspace{0.5cm}
+\lineControl{1}{1}{15}
+\end{enumerate}
+\item \begin{enumerate}
+	\item  Find the lowest common multiple of 9 and 21:\hspace{6cm}(2 marks)
+\lineControl{2}{1}{15}
+\item Find the highest common factor of 42 and 70:\hspace{6cm}(2 marks)
+\lineControl{2}{1}{15}
+\end{enumerate}
+\item Use a factor tree to write 84 as the product of prime factors:\hspace{4.5cm}(2 marks)\vspace{3.5cm}\\
+-\hspace{10cm}84 = \rule{5cm}{\lThick}
+\newpage
+\item List all of the factors of 96:\hspace{9.5cm}(2 marks)
+\lineControl{1}{1}{15}
+
+\item Convert the following decimals to fractions in their simplest form:
+\begin{enumerate}
+	\item  $0.36$\hspace{13cm}(2 marks)
+	\lineControl{2}{1}{15}
+	\item $0.\dot{5}$\hspace{13cm}(1 mark)
+	\lineControl{2}{1}{15}
+\end{enumerate}
+
+\item Complete the following calculations:
+\begin{multicols}{2}
+	\begin{enumerate}
+		\item~~~$9-21=$ \\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+		\item $-3--8=$\\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+		\item $4+-10=$\\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+		\item $-8 \times 6=$\\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+		\item $-36 \div -4=$\\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+		\item $-3-2 \times -7=$\\\\\noindent\rule{\lWid cm}{\lThick}\small(1)\normalsize\\
+	\end{enumerate}	
+\end{multicols}
+\item The numbers in the circles multiply to give the number in the squares between them. Fill in the missing spaces:\hspace{13cm}(2 marks)
+	\begin{center}
+	\begin{tikzpicture}
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (3*\wdth,0);
+	\coordinate (C) at (1.5*\wdth,4*\hght);
+	\draw[black, thin] (A)--(B)--(C)--(A);
+	\filldraw[draw=black,fill=white, thin] (A) circle[radius=0.6cm]node{$-3$};
+	\filldraw[draw=black,fill=white, thin] (B) circle[radius=0.6cm]node{$-7$};
+	\filldraw[draw=black,fill=white, thin] (C) circle[radius=0.6cm];
+	\filldraw[draw=black,fill=white, thin] (0.75*\wdth-0.5,2*\hght-0.5) rectangle(0.75*\wdth+0.5,2*\hght+0.5)node[midway]{$18$};
+	\filldraw[draw=black, fill=white, thin] (2.25*\wdth-0.5,2*\hght-0.5) rectangle(2.25*\wdth+0.5,2*\hght+0.5);
+	\filldraw[draw=black,fill=white, thin] (1.5*\wdth-0.5,0-0.5) rectangle(1.5*\wdth+0.5,0+0.5);
+	\end{tikzpicture}
+\end{center}
+\newpage
+	\item The two bricks below add to the brick above. Fill in the missing bricks:\hspace{2cm}(2 marks)\\
+\begin{center}
+	\begin{tikzpicture}
+	\draw[black, thin] (0,0) rectangle (\wdth,\hght)node[midway]{$-5$};
+	\draw[black, thin] (\wdth,0) rectangle (2*\wdth,\hght);
+	\draw[black, thin] (2*\wdth,0) rectangle (3*\wdth,\hght)node[midway]{$-7$};
+	\draw[black, thin] (\wdth/2,\hght) rectangle (3*\wdth/2,2*\hght)node[midway]{$2$};
+	\draw[black, thin] (3*\wdth/2,\hght) rectangle (5*\wdth/2,2*\hght);
+	\draw[black, thin] (\wdth,2*\hght) rectangle (2*\wdth,3*\hght);
+	\end{tikzpicture}
+\end{center}
+\item List all the square numbers less than 101:\hspace{7cm}(2 marks)\\
+\lineControl{1}{1}{15}
+
+\item Evaluate the following:
+\begin{multicols}{2}
+	\begin{enumerate}
+\item $3^2\times(3+-6)=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $\displaystyle \Big(\frac{2}{3} \Big)^3=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $(-2)^4=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $4\times 15 \div 3 \div 2=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $(13--1)\times 3-13=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $3\times -6 + 2\times 13=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $\displaystyle \frac{-96}{-12}=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+\item $\displaystyle \frac{-5+-19}{-3+9}=$\\\\\noindent\rule{\lWid cm}{\lThick}\\\\\noindent\rule{\lWid cm}{\lThick}\small(2)\normalsize\\
+	\end{enumerate}	
+\end{multicols}
+\item Simplify $\sqrt{2}\times \sqrt{5}$:\hspace{12cm}(1 mark)\\
+\lineControl{1}{1}{15}
+\item Write $\sqrt{45}$ in the form $a\sqrt{b}$ where $a$ and $b$ are integers:\hspace{5.5cm}(2 marks)\\
+\lineControl{1}{1}{15}
+\newpage
+\textbf{Section 2 - challenge questions} 
+\item Find the value of $P$ in the following exponent equation~~~~$\displaystyle 2^{2 \times P -3}=32$\hspace{2cm}(3 marks)
+\lineControl{3}{1}{17}
+\item~~~~~~$8 \times 21 \times 11=1848$~~and~~$4 \times 7 \times 13^2=4732$.\hspace{6cm}(6 marks)
+\begin{enumerate}
+	\item Find the Highest Common Factor of $1848$ and $4732$
+	~\lineControl{6}{1}{17}
+	\item Write the Lowest Common Multiple of $1848$ and $4732$  as the product of 3 numbers.
+	\footnotesize
+	\begin{itemize}
+		\item the numbers do not need to be primes 
+		\item you do not have to find the actual value of Lowest Common Multiple.
+	\end{itemize}
+	\normalsize
+	~\lineControl{5}{1}{17}
+\end{enumerate}
+\item It takes Jane 2 hours to load a truck with firewood, Samantha 2.5 hours and Anna 3 hours.\\ How long will it take them to load one truck working together?\hspace{3cm}(4 marks)\vspace{0.5cm}
+\lineControl{3}{1}{17}
+\lineControl{4}{1}{17}
+\item Identify the primes in the set $\{165,166,167,168,169,170,171, 172, 173, 174\}$\hspace{2cm}(4 marks)\vspace{0.5cm}
+\lineControl{4}{1}{17}
+\item Write $\sqrt{320}$ in the form $a\sqrt{b}$ where $a$ and $b$ are integers:\hspace{5.5cm}(4 marks)\\
+\lineControl{3}{1}{17}
+\item Clearly show that $\displaystyle 0.3\dot{4}=\frac{31}{90}$\hspace{10.5cm}(3 marks)\vspace{0.5cm}
+\lineControl{4}{1}{17}
+\item  The two bricks below add to the brick above. Fill in the missing bricks:\hspace{2.5cm}(4 marks)\\
+\begin{center}
+	\begin{tikzpicture}
+	\draw[black, thin] (0,0) rectangle (\wdth,\hght)node[midway]{$-2$};
+	\draw[black, thin] (\wdth,0) rectangle (2*\wdth,\hght);
+	\draw[black, thin] (2*\wdth,0) rectangle (3*\wdth,\hght)node[midway]{$-5$};
+	\draw[black, thin] (\wdth/2,\hght) rectangle (3*\wdth/2,2*\hght);
+	\draw[black, thin] (3*\wdth/2,\hght) rectangle (5*\wdth/2,2*\hght);
+	\draw[black, thin] (\wdth,2*\hght) rectangle (2*\wdth,3*\hght)node[midway]{$35$};
+	\end{tikzpicture}
+\end{center}
+\end{enumerate}
+\newpage
+\lineControlExtra{26}{1}{18.5}
+\newpage
+\lineControlExtra{26}{1}{18.5}
+
+
+\end{document}

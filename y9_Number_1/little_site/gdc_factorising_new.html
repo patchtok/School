@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<style>
+button, div, input { font-size: 16px; font-weight: normal; color: #333333; font-family: "Courier New", Helvetica, sans-serif;}
+
+button{color: #000000; background-color: #ffffff; border-style: solid; border-width: 2px; border-style: outset;}
+button:hover { background-color: #dddddd;}
+
+div { margin-left: auto; margin-right: auto; margin-top:5px;
+background-color: #ffffff;
+width: 580px; height: auto;
+padding: 5px; border: 1px solid #cccccc;
+font-family: "Courier New", Helvetica, sans-serif; }
+
+input { margin-left:15px; margin-right:5px; width: 100px; border-style: inset;}
+
+div.Primes { background-color: #ffffff; font-size: 18px;}
+input.Primes{ margin-left:5px; margin-right:5px; width: 75px;}
+
+button.Primes{ font-size: 16px;}
+
+div.Factors{ background-color:#ffffff;}
+
+div.Line{ background-color:#000000; padding: 1px; border: 0px;}
+</style>
+<script>
+// ensure box initial values are deleted
+var idArray=new Array();
+function clearVal(id){
+// delete on initial click only
+if (idArray.indexOf(id)==-1){
+idArray[idArray.length]=id;
+document.getElementById(id).value="";}
+}
+// greatest common divisor function
+function gcd(){
+var a=document.getElementById("numOne").value;
+var b=document.getElementById("numTwo").value;
+//validate and output error if necessary
+if(a>1 && b>1){}else{document.getElementById("gcdOut").innerHTML="You need two whole numbers greater than 0" ; return;}
+//swap variables so a greater than b.
+if(b > a){
+var temp=a; a=b; b=temp;
+}
+// all set and now do algorithm
+var t=0;
+while(b!=0){
+t=b;
+b=a%t;
+a=t;
+}
+//output t as result
+document.getElementById("gcdOut").innerHTML = "Highest Common Factor is:"+t;
+}
+// finding primes  function
+function getPrimes(){
+var count=0;
+var a=document.getElementById("primOne").value;
+var b=document.getElementById("primTwo").value;
+//validate and output error if necessary
+if(a>0 && b>0){}else{document.getElementById("PrimeOutput").innerHTML="You need two whole numbers greater than 0" ; return;}
+if(Number(a) > Number(b)){document.getElementById("PrimeOutput").innerHTML="Your first number needs to be less than the second <br> Number a= "+a+" Number b= "+b ; return;}
+var primeArray=new Array();
+// initialise with prime of 2
+primeArray[0]=2;
+// prime algorithm
+//-----
+for(i=2;i<b;i++){
+var prime=true;
+for(j=0;j<primeArray.length;j++){
+// respond if not prime
+if(i%primeArray[j]==0){ 
+j=primeArray.length;
+prime=false;
+}
+}
+if(prime){
+primeArray[primeArray.length]=i;
+}
+}
+//-----
+// organise for output
+// char length count
+var pCount=0;
+var outString=""
+for(k=0;k<primeArray.length;k++){
+if(primeArray[k]>a){
+outString+=primeArray[k]+",";
+count++;
+pCount+=primeArray[k].toString().length+1;
+if(pCount>45){
+outString+="<br>";
+pCount=0;
+}
+}
+}
+outString+="<br> The number of primes is: "+count;
+document.getElementById("PrimeOutput").innerHTML = outString;
+}
+// finding prime factors function
+function getFactors(){
+// find prime factors
+var a=document.getElementById("factOne").value;
+var factorArray=new Array();
+var prmArray=new Array();
+prmArray[0]=2;
+var finding=true;
+var count=0;
+var temp=0;
+temp=a;
+var counter=0;
+while(finding){
+while(temp%prmArray[count]==0){
+temp=temp/prmArray[count];
+factorArray[factorArray.length]=prmArray[count];
+if(temp==1){
+finding=false;
+}
+}
+count++;
+prmArray=getNextPrime(prmArray)
+}
+// create factor list
+var mult=multiplyArray(factorArray);
+var hold1=new Array();
+// get list of all factors
+hold1=factorListing(factorArray);
+var factorString="";
+for(i=0; i<hold1.length/2; i++){
+factorString+=hold1[i]+","+hold1[hold1.length-1-i]+"<br>";
+}
+// output factors
+document.getElementById("FactorsOutput").innerHTML="Prime Factors: "+factorArray.toString()+"<br> Multiplied factors = "+mult+"<br> Factor List=<br>"+factorString;
+}
+// used for prime factor finding
+function getNextPrime(p){
+//get last prime 
+var startNum=p[p.length-1];
+var finding=true;
+while(finding){
+var prime=true;
+for(j=0; j<p.length; j++){
+if(startNum%p[j]==0){
+startNum++;
+j=p.length;
+prime=false;
+}}
+if(prime){
+p[p.length]=startNum;
+return p;
+}
+}
+}
+// multiply elements in an array and returns the value
+function multiplyArray(p){
+var temp=1;
+for(i=0; i<p.length; i++){
+temp=temp*p[i];
+}
+return temp;
+}
+// returns the splice of an array as an array
+// array start finish (start and finish is inclusive)
+function splicer(p,s,f){
+var temp=new Array();
+var count=0;
+for(i=s; i<=f; i++){
+temp[count]=p[i];
+count++;
+}
+return temp;
+}
+// get factor listing from an array set of prime factors will receive factorArray
+function factorListing(a){
+// list discrete elements of factorArray
+var factorList=new Array();
+// max power of each discrete element
+var maxPower=new Array();
+// count of discrete factors
+var countF=0;
+// count number of discrete factors
+var countMax=1;
+// initialise with first factor
+factorList[countF]=a[0];
+maxPower[countF]=countMax;
+for (i=1; i<a.length;i++){
+if(factorList[countF]==a[i]){
+countMax++;
+maxPower[countF]=countMax;
+}else{
+// give max power and then reset
+maxPower[countF]=countMax;
+countMax=1;
+// increment countF and add new factor
+countF++;
+factorList[countF]=a[i];
+maxPower[countF]=countMax;
+}
+}
+var hold=new Array();
+hold[0]=factorList;
+hold[1]=maxPower;
+return writeFactorList(hold)
+}
+// receives array from factor listing
+function writeFactorList(b){
+// factor list is b[0];
+//max powers is b[1];
+var temp=new Array();
+temp[0]=1;
+var count=1;
+var tick=0;
+// getting all permutations
+while(tick<b[0].length){
+var l=temp.length;
+for (i=0; i<l; i++){
+for(j=1; j<=b[1][tick]; j++){
+temp[count]=simplePower(b[0][tick],j)*temp[i];
+count++;
+}
+}
+tick++;
+}
+// sort array before returning
+return selectionSort(temp);
+}
+
+
+function simplePower(a,b){
+if(b==0){return 1;}
+var temp=a;
+var count=1;
+while(count<b){
+temp=temp*a;
+count++;
+}
+return temp;
+}
+// receives 1dimensional array of numbers
+function selectionSort(c){
+var smallest=-1;
+var temp= -1;
+//--
+for(i=0; i<c.length; i++){
+smallest=c[i];
+temp=i;
+//----
+for(j=i+1; j<c.length; j++){
+if(c[j]<smallest){
+smallest=c[j];
+temp=j;}
+}
+//----
+//swap
+if(smallest!=c[i]){
+var hold=c[i];
+c[temp]=hold;
+c[i]=smallest;
+}
+}
+//--
+return c;
+}
+
+
+</script>
+<body>
+<div>Find the Highest Common Factor (Greatest Common Divisor)</div>
+<div>Enter Two Numbers:<input type="text" id="numOne" value="123" onclick="clearVal(id)"> and <input type="text" id="numTwo" value="123" onclick="clearVal(id)"><button type="button" onclick="gcd()">Find HCF</button> </div>
+<div id="gcdOut">Output</div>
+<div class="Line"></div>
+<div class="Primes">Find all prime numbers between two numbers</div>
+<div class="Primes">Greater than:<input class="Primes" type="text" id="primOne" value="123" onclick="clearVal(id)">Less than:<input class="Primes" type="text" id="primTwo" value="123" onclick="clearVal(id)"><button type="button" class="Primes" onclick="getPrimes()">Find Primes</button> </div>
+<div Class="Primes" id="PrimeOutput">Output</div>
+<div class="Line"></div>
+<div class="Factors">Find Prime Factors of a Number</div>
+<div class="Factors">Enter number to Factorise:<input class="Primes" type="text" id="factOne" value="96" onclick="clearVal(id)"><button type="button" class="Primes" onclick="getFactors()">Find Factors</button> </div>
+<div Class="Factors" id="FactorsOutput">Output</div>
+<div class="Line"></div>
+
+
+</body>
+</html>

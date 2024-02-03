@@ -1,0 +1,54 @@
+button, div, input { 
+    font-size: 16px; 
+    font-weight: normal; 
+    color: #333333; 
+    font-family: "Courier New", Helvetica, sans-serif;}
+
+button{
+    color: #000000; 
+    background-color: #ffffff; 
+    border-style: solid; 
+    border-width: 2px; 
+    border-style: outset;}
+
+button:hover { background-color: #dddddd;}
+
+div { 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top:5px;
+    background-color: #ffffff;
+    width: 580px; 
+    height: auto;
+    padding: 5px; 
+    border: 1px solid #cccccc;
+    font-family: "Courier New", Helvetica, sans-serif; 
+}
+
+input { 
+    margin-left:15px; 
+    margin-right:5px; 
+    width: 100px; 
+    border-style: inset;}
+
+div.Primes { 
+    background-color: #ffffff; 
+    font-size: 18px;}
+
+input.Primes{ 
+    margin-left:5px; 
+    margin-right:5px; 
+    width: 75px;
+}
+
+button.Primes{ 
+    font-size: 16px;
+}
+
+div.Factors{ background-color:#ffffff;}
+
+div.Line{ 
+    background-color:#000000; 
+    padding: 1px; 
+    border: 0px;
+}
